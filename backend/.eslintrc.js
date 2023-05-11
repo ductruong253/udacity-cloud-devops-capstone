@@ -5,9 +5,12 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'import', 'prettier'],
   extends: [
-    'airbnb-base',
+    'airbnb-typescript/base',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   rules: {
     'prettier/prettier': 'error',
