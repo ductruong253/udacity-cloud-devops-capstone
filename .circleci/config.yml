@@ -49,7 +49,7 @@ jobs:
 
   build-and-push-image:
     environment:
-        IMAGE_NAME: building-on-ci
+        IMAGE_NAME: backend-service
 
     docker:
       - image: cimg/node:18.16.0
@@ -72,7 +72,7 @@ jobs:
           command: |
             echo "Docker ID and Image: $IMAGE_NAME"
             docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASS"
-            docker tag $IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
+            docker tag $IMAGE_NAME $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
             docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
 
 # Orchestrate jobs using workflows
