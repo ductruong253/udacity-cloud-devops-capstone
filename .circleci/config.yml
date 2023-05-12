@@ -73,7 +73,7 @@ jobs:
             echo "Docker ID and Image: $IMAGE_NAME"
             docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASS"
             docker tag $IMAGE_NAME $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
-            docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
+            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:lastest
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
