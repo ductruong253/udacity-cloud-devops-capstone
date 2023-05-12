@@ -64,16 +64,16 @@ jobs:
           name: Build docker image
           command: |
             cd backend
-            docker build --tag=$IMAGE_NAME:latest .
-            docker image ls
+            sudo docker build --tag=$IMAGE_NAME:latest .
+            sudo docker images ls
 
       - run:
           name: Upload Docker image to Dockerhub
           command: |
             echo "Docker ID and Image: $IMAGE_NAME"
-            docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASS"
-            docker tag $IMAGE_NAME $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
-            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:lastest
+            sudo docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASS"
+            sudo docker tag $IMAGE_NAME $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+            sudo docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
