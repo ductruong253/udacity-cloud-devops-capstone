@@ -47,7 +47,7 @@ jobs:
             npm run lint
             npm audit fix --audit-level=critical --force
 
-  build-image:
+  build-and-push-image:
     environment:
       IMAGE_NAME: backend-service
     docker:
@@ -59,20 +59,9 @@ jobs:
           name: Build Docker image
           command: |
             cd backend && pwd && ls |
-            sudo docker build -t $IMAGE_NAME:latest .
-
-  publish-latest:
-    environment:
-      IMAGE_NAME: backend-service
-    docker:
-      - image: circleci/buildpack-deps:stretch
-    steps:
-      - setup_remote_docker
-      - run:
-          name: Publish Docker Image to Docker Hub
-          command: |
+            sudo docker build -t $IMAGE_NAME:latest . |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push $IMAGE_NAME:latest
+            sudo docker push $IMAGE_NAME:latest
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -84,7 +73,5 @@ workflows:
           requires: [build-backend]
       - scan-backend:
           requires: [build-backend]
-      - build-image:
+      - build-and-push-image:
           requires: [build-backend, test-backend, scan-backend]
-      - publish-latest:
-          requires: [build-image]
