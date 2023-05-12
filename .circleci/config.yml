@@ -58,8 +58,8 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            pwd && ls && cd ./backend |
-            docker build -t $IMAGE_NAME:latest .
+            cd backend && pwd && ls |
+            sudo docker build -t $IMAGE_NAME:latest .
 
   publish-latest:
     environment:
