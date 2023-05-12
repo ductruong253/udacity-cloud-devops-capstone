@@ -49,19 +49,31 @@ jobs:
 
   build-and-push-image:
     environment:
-      IMAGE_NAME: backend-service
+        IMAGE_NAME: building-on-ci
+
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: cimg/node:18.16.0
+
     steps:
       - checkout
-      - setup_remote_docker
+
+      - setup_remote_docker:
+          version: 19.03.13
+
       - run:
-          name: Build Docker image
+          name: Build docker image
           command: |
-            cd backend && pwd && ls |
-            docker build -t $IMAGE_NAME:latest . |
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push $IMAGE_NAME:latest
+            cd backend
+            docker build --tag=$IMAGE_NAME .
+            docker image ls
+
+      - run:
+          name: Upload Docker image to Dockerhub
+          command: |
+            echo "Docker ID and Image: $IMAGE_NAME"
+            docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASS"
+            docker tag $IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
+            docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
