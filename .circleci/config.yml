@@ -64,7 +64,7 @@ jobs:
           name: Build docker image
           command: |
             cd backend
-            docker build --tag=$IMAGE_NAME .
+            docker build --tag=$IMAGE_NAME:latest .
             docker image ls
 
       - run:
