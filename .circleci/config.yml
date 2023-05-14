@@ -172,8 +172,7 @@ jobs:
                 echo "No change to management instances"
               else
                 cat ~/inventory.txt
-                pwd
-                ls -la
+                cd .circleci/ansible
                 ansible-playbook -i ~/inventory.txt configure-server.yml
               fi
 
@@ -200,8 +199,7 @@ jobs:
                 echo "No change to management instances"
               else
                 cat ~/inventory.txt
-                pwd
-                ls -la
+                cd .circleci/ansible
                 ansible-playbook -i ~/inventory.txt configure-cluster.yml
               fi
       - run:
