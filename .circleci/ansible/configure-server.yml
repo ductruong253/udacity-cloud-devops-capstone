@@ -1,5 +1,5 @@
 ---
-- name: "Install dependencies"
+- name: "Install dependencies for management"
   hosts: management
   user: ubuntu
   gather_facts: false
