@@ -226,6 +226,28 @@ jobs:
           paths:
             - elb_dns.txt
 
+  deploy-docker:
+    docker:
+      - image: python:3.11-rc-alpine
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "d0:a8:82:44:ed:b1:79:13:61:e7:c2:36:79:6d:8b:8b:c5:0f:4f:a1"
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible openssh
+      - run:
+          name: Deploy Docker Image
+          command: |
+            cat ~/inventory.txt
+            cd .circleci/ansible
+            ansible-playbook -i ~/inventory.txt deploy-app.yml
+          no_output_timeout: 2m
+
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
