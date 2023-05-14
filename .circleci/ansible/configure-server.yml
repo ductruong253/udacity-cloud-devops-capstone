@@ -4,11 +4,11 @@
   user: ubuntu
   gather_facts: false
   become: yes
-  # pre_tasks:
-    # - name: "Install 'unzip'"
-    #   become: true
-    #   raw: sudo apt -y update && sudo apt install unzip
-    #   changed_when: false
+  pre_tasks:
+    - name: "Install 'unzip'"
+      become: true
+      raw: sudo apt -y update && sudo apt install unzip
+      changed_when: false
 
   roles:
     - install-awscli
