@@ -1,0 +1,24 @@
+Test deloy network cloudformation
+aws cloudformation deploy \
+--template-file cloudformation/network.yml \
+--stack-name "backend-service-eks-network" \
+--region us-east-1 \
+--parameter-overrides file://cloudformation/network-parameters.json
+
+Test deploy cluster cloudformation
+aws cloudformation deploy \
+--template-file cloudformation/cluster.yml \
+--tags project=backend-service-project \
+--stack-name "backend-service-eks-cluster" \
+--region us-east-1 \
+--parameter-overrides file://cloudformation/cluster-parameters.json \
+--capabilities CAPABILITY_NAMED_IAM
+
+Test deploy nodegroup
+aws cloudformation deploy \
+--template-file cloudformation/nodegroup.yml \
+--tags project=backend-service-project \
+--stack-name "backend-service-eks-nodegroup" \
+--region us-east-1 \
+--parameter-overrides file://cloudformation/nodegroup-parameters.json \
+--capabilities CAPABILITY_NAMED_IAM
