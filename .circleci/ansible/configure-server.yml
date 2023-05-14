@@ -6,9 +6,10 @@
   become: yes
   pre_tasks:
     - name: "Install 'unzip'"
-      become: true
-      raw: sudo apt -y update && sudo apt install unzip
-      changed_when: false
+      apt:
+        name: [ "unzip" ]
+        state: latest
+        update_cache: yes
 
   roles:
     - install-awscli
