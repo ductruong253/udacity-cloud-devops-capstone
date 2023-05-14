@@ -9,7 +9,7 @@ Parameters:
     Type: String
   amiImageId:
     Description: Defines the Image-ID of the OS to deploy
-    Default: ami-068663a3c619dd892
+    Default: ami-0044130ca185d0880
     Type: String
 
 Resources:
