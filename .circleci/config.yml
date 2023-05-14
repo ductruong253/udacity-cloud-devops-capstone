@@ -148,6 +148,33 @@ jobs:
           paths:
             - inventory.txt
             - deployLog.txt
+  
+  configure-infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "d0:a8:82:44:ed:b1:79:13:61:e7:c2:36:79:6d:8b:8b:c5:0f:4f:a1"
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+      - run:
+          name: Configure server
+          command: |
+            if grep -q "No changes to deploy" ~/deployLog.txt
+              then
+                cat ~/inventory.txt
+                echo "No change to management instances"
+              else
+                cat ~/inventory.txt
+                cd ansible
+                ansible-playbook -i ~/inventory.txt configure-server.yml
+              fi
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -163,3 +190,5 @@ workflows:
           requires: [build-backend, test-backend, scan-backend]
       - deploy-infrastructure:
           requires: [build-and-push-image]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
