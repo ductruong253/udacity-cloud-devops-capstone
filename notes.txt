@@ -25,6 +25,6 @@ aws cloudformation deploy \
 
 
 SSH to management
-ssh -i truongdd.pem ubuntu@ec2-44-203-148-17.compute-1.amazonaws.com
+ssh -i truongdd.pem ubuntu@ec2-34-226-249-137.compute-1.amazonaws.com
 
 aws eks update-kubeconfig --region us-east-1 --name backend-service-cluster
