@@ -1,5 +1,5 @@
 [
     "EnvironmentName=backend-service",
     "SSHKeyName=truongdd",
-    "amiImageId=ami-0767046d1677be5a0"
+    "amiImageId=ami-068663a3c619dd892"
   ]
